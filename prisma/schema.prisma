@@ -1,0 +1,51 @@
+// schema.prisma
+
+// Definindo o modelo de usuário
+model User {
+    id       Int       @id @default(autoincrement())
+    username String
+    email    String    @unique
+    password String
+    orders   Order[]
+    comments Comment[]
+    Post     Post[]
+    Task     Task[]
+}
+
+// Definindo o modelo de pedido
+model Order {
+    id          Int    @id @default(autoincrement())
+    orderNumber String
+    user        User   @relation(fields: [userId], references: [id])
+    userId      Int
+    // Adicione outros campos relevantes para os pedidos
+}
+
+// Definindo o modelo de comentário
+model Comment {
+    id     Int    @id @default(autoincrement())
+    text   String
+    user   User   @relation(fields: [userId], references: [id])
+    userId Int
+    // Adicione outros campos relevantes para os comentários
+}
+
+// Definindo o modelo de postagem
+model Post {
+    id      Int    @id @default(autoincrement())
+    title   String
+    content String
+    user    User   @relation(fields: [userId], references: [id])
+    userId  Int
+    // Adicione outros campos relevantes para as postagens
+}
+
+// Definindo o modelo de tarefa
+model Task {
+    id          Int    @id @default(autoincrement())
+    title       String
+    description String
+    user        User   @relation(fields: [userId], references: [id])
+    userId      Int
+    // Adicione outros campos relevantes para as tarefas
+}
