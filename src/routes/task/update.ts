@@ -2,49 +2,53 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
-export async function updateUser(app: FastifyInstance){
-    app.put('/user/', async (req,res) => {
+export async function updateTask(app: FastifyInstance){
+    app.put('/task/', async (req) => {
         const bodySchema = z.object({
             id: z.number(),
-            username: z.string().optional(),
-            email: z.string().email().optional(),
-            password: z.string().optional(),
-            status: z.boolean().optional(),
-          });
-        // Validar o corpo da solicitação
-        const userData = bodySchema.parse(req.body)
-        const userId = userData.id
+            title: z.string().optional(),
+            description: z.string().optional(),
+            createdDate: z.date().optional(),
+            userId: z.number().optional(),
+            status: z.number().optional(),
+            projectId: z.number().optional()
+        });
+        const taskData = bodySchema.parse(req.body);
+
         try {
-            const user = await prisma.user.findUnique({
+            const task = await prisma.task.findUnique({
                 where: {
-                    id: userId,
-                },
+                    id: taskData.id
+                } 
             });
-            
-            if(user){
-                const updtUser = {
-                ...user,
-                ...userData,
+            if(task){
+                var updtTask = {
+                    ...task,
+                    ...taskData
                 }
-                const returnUser = await prisma.user.update({
-                    where: {
-                        id: userId,
+                const updateTaks = await prisma.task.update({
+                    where:{
+                      id: task.id
                     },
-                    data: updtUser
-                });
+                    data: updtTask 
+                })
+
+                return{
+                    updateTaks,
+                    success: "Tarefa atualizada com sucesso."
+                }
+
+            } else {
                 return {
-                    returnUser,
-                    msg: "Usuário encontrado.",
-                };
-            }else{
-                return {
-                    user,
-                    error: "Usuário não encontrado.",
+                    taskData,
+                    error: "Tarefa não encontrada!",
                 };
             }
+
+
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao encontrar o usuário.",
+                error: "Ocorreu um erro ao registrar a tarefa.",
             };
         }
     });

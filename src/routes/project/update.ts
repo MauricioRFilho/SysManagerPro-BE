@@ -3,43 +3,44 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function updateUser(app: FastifyInstance){
-    app.put('/user/', async (req,res) => {
+    app.put('/project/', async (req,res) => {
         const bodySchema = z.object({
             id: z.number(),
-            username: z.string().optional(),
-            email: z.string().email().optional(),
-            password: z.string().optional(),
+            title: z.string().optional(),
+            description: z.string().optional(),
+            createdBy: z.number().optional(),
+            createdDate: z.date().optional(),
             status: z.boolean().optional(),
           });
         // Validar o corpo da solicitação
-        const userData = bodySchema.parse(req.body)
-        const userId = userData.id
+        const projectData = bodySchema.parse(req.body)
+        const id = projectData.id
         try {
-            const user = await prisma.user.findUnique({
+            const project = await prisma.project.findUnique({
                 where: {
-                    id: userId,
+                    id: id,
                 },
             });
             
-            if(user){
-                const updtUser = {
-                ...user,
-                ...userData,
+            if(project){
+                const updtProject = {
+                ...project,
+                ...projectData,
                 }
-                const returnUser = await prisma.user.update({
+                const returnProject = await prisma.project.update({
                     where: {
-                        id: userId,
+                        id: id,
                     },
-                    data: updtUser
+                    data: updtProject
                 });
                 return {
-                    returnUser,
-                    msg: "Usuário encontrado.",
+                    returnProject,
+                    success: "Projeto atualizado com sucesso.",
                 };
             }else{
                 return {
-                    user,
-                    error: "Usuário não encontrado.",
+                    project,
+                    error: "Projeto não encontrado, verifique o código(id) do projeto.",
                 };
             }
         } catch (error) {

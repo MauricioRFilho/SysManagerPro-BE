@@ -2,40 +2,40 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
-export async function getUser(app: FastifyInstance){
-    app.get('/user/:userId', async (req,res) => {
+export async function getTask(app: FastifyInstance){
+    app.get('/user/:taskId', async (req,res) => {
         const paramsSchema = z.object({
-            userId: z.string().optional()
+            taskId: z.string().optional()
         });
 
         // Validar o corpo da solicitação
         var id = 0;
         const params = paramsSchema.parse(req.params);
-        if(params.userId != null){
-            id = parseInt(params.userId);
+        if(params.taskId != null){
+            id = parseInt(params.taskId);
         }
         try {
             // Verificar se o email já está em uso
             if(id != 0){
-                const users = await prisma.user.findFirst({
+                const task = await prisma.task.findUnique({
                     where: {
                         id: id,
                     },
                 });
                 return {
-                    users,
-                    msg: "Usuário encontrado.",
+                    task,
+                    success: "Tarefa encontrado.",
                 };
             } else {
-                const users = await prisma.user.findMany();
+                const tasks = await prisma.task.findMany();
                 return {
-                    users,
-                    msg: "Usuários encontrados.",
+                    tasks,
+                    success: "Lista de Tarefas encontrados.",
                 };
             }
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao encontrar o usuário.",
+                error: "Ocorreu um erro ao relizar a busca.",
             };
         }
     });

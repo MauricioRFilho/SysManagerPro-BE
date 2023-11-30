@@ -1302,35 +1302,35 @@ export namespace Prisma {
 
 
   /**
-   * Count Type TaskCountOutputType
+   * Count Type ProjectCountOutputType
    */
 
-  export type TaskCountOutputType = {
-    Project: number
+  export type ProjectCountOutputType = {
+    task: number
   }
 
-  export type TaskCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Project?: boolean | TaskCountOutputTypeCountProjectArgs
+  export type ProjectCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    task?: boolean | ProjectCountOutputTypeCountTaskArgs
   }
 
   // Custom InputTypes
 
   /**
-   * TaskCountOutputType without action
+   * ProjectCountOutputType without action
    */
-  export type TaskCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the TaskCountOutputType
+     * Select specific fields to fetch from the ProjectCountOutputType
      */
-    select?: TaskCountOutputTypeSelect<ExtArgs> | null
+    select?: ProjectCountOutputTypeSelect<ExtArgs> | null
   }
 
 
   /**
-   * TaskCountOutputType without action
+   * ProjectCountOutputType without action
    */
-  export type TaskCountOutputTypeCountProjectArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ProjectWhereInput
+  export type ProjectCountOutputTypeCountTaskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TaskWhereInput
   }
 
 
@@ -5183,12 +5183,14 @@ export namespace Prisma {
     id: number | null
     status: number | null
     userId: number | null
+    projectId: number | null
   }
 
   export type TaskSumAggregateOutputType = {
     id: number | null
     status: number | null
     userId: number | null
+    projectId: number | null
   }
 
   export type TaskMinAggregateOutputType = {
@@ -5196,7 +5198,9 @@ export namespace Prisma {
     title: string | null
     description: string | null
     status: number | null
+    createdDate: Date | null
     userId: number | null
+    projectId: number | null
   }
 
   export type TaskMaxAggregateOutputType = {
@@ -5204,7 +5208,9 @@ export namespace Prisma {
     title: string | null
     description: string | null
     status: number | null
+    createdDate: Date | null
     userId: number | null
+    projectId: number | null
   }
 
   export type TaskCountAggregateOutputType = {
@@ -5212,7 +5218,9 @@ export namespace Prisma {
     title: number
     description: number
     status: number
+    createdDate: number
     userId: number
+    projectId: number
     _all: number
   }
 
@@ -5221,12 +5229,14 @@ export namespace Prisma {
     id?: true
     status?: true
     userId?: true
+    projectId?: true
   }
 
   export type TaskSumAggregateInputType = {
     id?: true
     status?: true
     userId?: true
+    projectId?: true
   }
 
   export type TaskMinAggregateInputType = {
@@ -5234,7 +5244,9 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    createdDate?: true
     userId?: true
+    projectId?: true
   }
 
   export type TaskMaxAggregateInputType = {
@@ -5242,7 +5254,9 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    createdDate?: true
     userId?: true
+    projectId?: true
   }
 
   export type TaskCountAggregateInputType = {
@@ -5250,7 +5264,9 @@ export namespace Prisma {
     title?: true
     description?: true
     status?: true
+    createdDate?: true
     userId?: true
+    projectId?: true
     _all?: true
   }
 
@@ -5345,7 +5361,9 @@ export namespace Prisma {
     title: string
     description: string
     status: number
+    createdDate: Date
     userId: number
+    projectId: number | null
     _count: TaskCountAggregateOutputType | null
     _avg: TaskAvgAggregateOutputType | null
     _sum: TaskSumAggregateOutputType | null
@@ -5372,10 +5390,11 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     status?: boolean
+    createdDate?: boolean
     userId?: boolean
+    projectId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     Project?: boolean | Task$ProjectArgs<ExtArgs>
-    _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
 
   export type TaskSelectScalar = {
@@ -5383,13 +5402,14 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     status?: boolean
+    createdDate?: boolean
     userId?: boolean
+    projectId?: boolean
   }
 
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     Project?: boolean | Task$ProjectArgs<ExtArgs>
-    _count?: boolean | TaskCountOutputTypeDefaultArgs<ExtArgs>
   }
 
 
@@ -5397,14 +5417,16 @@ export namespace Prisma {
     name: "Task"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      Project: Prisma.$ProjectPayload<ExtArgs>[]
+      Project: Prisma.$ProjectPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       description: string
       status: number
+      createdDate: Date
       userId: number
+      projectId: number | null
     }, ExtArgs["result"]["task"]>
     composites: {}
   }
@@ -5756,7 +5778,7 @@ export namespace Prisma {
 
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
-    Project<T extends Task$ProjectArgs<ExtArgs> = {}>(args?: Subset<T, Task$ProjectArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findMany'> | Null>;
+    Project<T extends Task$ProjectArgs<ExtArgs> = {}>(args?: Subset<T, Task$ProjectArgs<ExtArgs>>): Prisma__ProjectClient<$Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5790,7 +5812,9 @@ export namespace Prisma {
     readonly title: FieldRef<"Task", 'String'>
     readonly description: FieldRef<"Task", 'String'>
     readonly status: FieldRef<"Task", 'Int'>
+    readonly createdDate: FieldRef<"Task", 'DateTime'>
     readonly userId: FieldRef<"Task", 'Int'>
+    readonly projectId: FieldRef<"Task", 'Int'>
   }
     
 
@@ -6103,11 +6127,6 @@ export namespace Prisma {
      */
     include?: ProjectInclude<ExtArgs> | null
     where?: ProjectWhereInput
-    orderBy?: ProjectOrderByWithRelationInput | ProjectOrderByWithRelationInput[]
-    cursor?: ProjectWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ProjectScalarFieldEnum | ProjectScalarFieldEnum[]
   }
 
 
@@ -6142,13 +6161,11 @@ export namespace Prisma {
   export type ProjectAvgAggregateOutputType = {
     id: number | null
     createdBy: number | null
-    tasks: number | null
   }
 
   export type ProjectSumAggregateOutputType = {
     id: number | null
     createdBy: number | null
-    tasks: number | null
   }
 
   export type ProjectMinAggregateOutputType = {
@@ -6156,9 +6173,8 @@ export namespace Prisma {
     title: string | null
     description: string | null
     createdBy: number | null
-    dateCreated: Date | null
+    createdDate: Date | null
     status: boolean | null
-    tasks: number | null
   }
 
   export type ProjectMaxAggregateOutputType = {
@@ -6166,9 +6182,8 @@ export namespace Prisma {
     title: string | null
     description: string | null
     createdBy: number | null
-    dateCreated: Date | null
+    createdDate: Date | null
     status: boolean | null
-    tasks: number | null
   }
 
   export type ProjectCountAggregateOutputType = {
@@ -6176,9 +6191,8 @@ export namespace Prisma {
     title: number
     description: number
     createdBy: number
-    dateCreated: number
+    createdDate: number
     status: number
-    tasks: number
     _all: number
   }
 
@@ -6186,13 +6200,11 @@ export namespace Prisma {
   export type ProjectAvgAggregateInputType = {
     id?: true
     createdBy?: true
-    tasks?: true
   }
 
   export type ProjectSumAggregateInputType = {
     id?: true
     createdBy?: true
-    tasks?: true
   }
 
   export type ProjectMinAggregateInputType = {
@@ -6200,9 +6212,8 @@ export namespace Prisma {
     title?: true
     description?: true
     createdBy?: true
-    dateCreated?: true
+    createdDate?: true
     status?: true
-    tasks?: true
   }
 
   export type ProjectMaxAggregateInputType = {
@@ -6210,9 +6221,8 @@ export namespace Prisma {
     title?: true
     description?: true
     createdBy?: true
-    dateCreated?: true
+    createdDate?: true
     status?: true
-    tasks?: true
   }
 
   export type ProjectCountAggregateInputType = {
@@ -6220,9 +6230,8 @@ export namespace Prisma {
     title?: true
     description?: true
     createdBy?: true
-    dateCreated?: true
+    createdDate?: true
     status?: true
-    tasks?: true
     _all?: true
   }
 
@@ -6317,9 +6326,8 @@ export namespace Prisma {
     title: string
     description: string
     createdBy: number
-    dateCreated: Date
+    createdDate: Date
     status: boolean
-    tasks: number
     _count: ProjectCountAggregateOutputType | null
     _avg: ProjectAvgAggregateOutputType | null
     _sum: ProjectSumAggregateOutputType | null
@@ -6346,10 +6354,10 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     createdBy?: boolean
-    dateCreated?: boolean
+    createdDate?: boolean
     status?: boolean
-    tasks?: boolean
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    task?: boolean | Project$taskArgs<ExtArgs>
+    _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["project"]>
 
   export type ProjectSelectScalar = {
@@ -6357,29 +6365,28 @@ export namespace Prisma {
     title?: boolean
     description?: boolean
     createdBy?: boolean
-    dateCreated?: boolean
+    createdDate?: boolean
     status?: boolean
-    tasks?: boolean
   }
 
   export type ProjectInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    task?: boolean | TaskDefaultArgs<ExtArgs>
+    task?: boolean | Project$taskArgs<ExtArgs>
+    _count?: boolean | ProjectCountOutputTypeDefaultArgs<ExtArgs>
   }
 
 
   export type $ProjectPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Project"
     objects: {
-      task: Prisma.$TaskPayload<ExtArgs>
+      task: Prisma.$TaskPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       description: string
       createdBy: number
-      dateCreated: Date
+      createdDate: Date
       status: boolean
-      tasks: number
     }, ExtArgs["result"]["project"]>
     composites: {}
   }
@@ -6729,7 +6736,7 @@ export namespace Prisma {
   export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    task<T extends TaskDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TaskDefaultArgs<ExtArgs>>): Prisma__TaskClient<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+    task<T extends Project$taskArgs<ExtArgs> = {}>(args?: Subset<T, Project$taskArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6763,9 +6770,8 @@ export namespace Prisma {
     readonly title: FieldRef<"Project", 'String'>
     readonly description: FieldRef<"Project", 'String'>
     readonly createdBy: FieldRef<"Project", 'Int'>
-    readonly dateCreated: FieldRef<"Project", 'DateTime'>
+    readonly createdDate: FieldRef<"Project", 'DateTime'>
     readonly status: FieldRef<"Project", 'Boolean'>
-    readonly tasks: FieldRef<"Project", 'Int'>
   }
     
 
@@ -7066,6 +7072,27 @@ export namespace Prisma {
 
 
   /**
+   * Project.task
+   */
+  export type Project$taskArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Task
+     */
+    select?: TaskSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TaskInclude<ExtArgs> | null
+    where?: TaskWhereInput
+    orderBy?: TaskOrderByWithRelationInput | TaskOrderByWithRelationInput[]
+    cursor?: TaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TaskScalarFieldEnum | TaskScalarFieldEnum[]
+  }
+
+
+  /**
    * Project without action
    */
   export type ProjectDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7142,7 +7169,9 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     status: 'status',
-    userId: 'userId'
+    createdDate: 'createdDate',
+    userId: 'userId',
+    projectId: 'projectId'
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
@@ -7153,9 +7182,8 @@ export namespace Prisma {
     title: 'title',
     description: 'description',
     createdBy: 'createdBy',
-    dateCreated: 'dateCreated',
-    status: 'status',
-    tasks: 'tasks'
+    createdDate: 'createdDate',
+    status: 'status'
   };
 
   export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -7470,9 +7498,11 @@ export namespace Prisma {
     title?: StringFilter<"Task"> | string
     description?: StringFilter<"Task"> | string
     status?: IntFilter<"Task"> | number
+    createdDate?: DateTimeFilter<"Task"> | Date | string
     userId?: IntFilter<"Task"> | number
+    projectId?: IntNullableFilter<"Task"> | number | null
     user?: XOR<UserRelationFilter, UserWhereInput>
-    Project?: ProjectListRelationFilter
+    Project?: XOR<ProjectNullableRelationFilter, ProjectWhereInput> | null
   }
 
   export type TaskOrderByWithRelationInput = {
@@ -7480,9 +7510,11 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    createdDate?: SortOrder
     userId?: SortOrder
+    projectId?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
-    Project?: ProjectOrderByRelationAggregateInput
+    Project?: ProjectOrderByWithRelationInput
   }
 
   export type TaskWhereUniqueInput = Prisma.AtLeast<{
@@ -7493,9 +7525,11 @@ export namespace Prisma {
     title?: StringFilter<"Task"> | string
     description?: StringFilter<"Task"> | string
     status?: IntFilter<"Task"> | number
+    createdDate?: DateTimeFilter<"Task"> | Date | string
     userId?: IntFilter<"Task"> | number
+    projectId?: IntNullableFilter<"Task"> | number | null
     user?: XOR<UserRelationFilter, UserWhereInput>
-    Project?: ProjectListRelationFilter
+    Project?: XOR<ProjectNullableRelationFilter, ProjectWhereInput> | null
   }, "id">
 
   export type TaskOrderByWithAggregationInput = {
@@ -7503,7 +7537,9 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    createdDate?: SortOrder
     userId?: SortOrder
+    projectId?: SortOrderInput | SortOrder
     _count?: TaskCountOrderByAggregateInput
     _avg?: TaskAvgOrderByAggregateInput
     _max?: TaskMaxOrderByAggregateInput
@@ -7519,7 +7555,9 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Task"> | string
     description?: StringWithAggregatesFilter<"Task"> | string
     status?: IntWithAggregatesFilter<"Task"> | number
+    createdDate?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     userId?: IntWithAggregatesFilter<"Task"> | number
+    projectId?: IntNullableWithAggregatesFilter<"Task"> | number | null
   }
 
   export type ProjectWhereInput = {
@@ -7530,10 +7568,9 @@ export namespace Prisma {
     title?: StringFilter<"Project"> | string
     description?: StringFilter<"Project"> | string
     createdBy?: IntFilter<"Project"> | number
-    dateCreated?: DateTimeFilter<"Project"> | Date | string
+    createdDate?: DateTimeFilter<"Project"> | Date | string
     status?: BoolFilter<"Project"> | boolean
-    tasks?: IntFilter<"Project"> | number
-    task?: XOR<TaskRelationFilter, TaskWhereInput>
+    task?: TaskListRelationFilter
   }
 
   export type ProjectOrderByWithRelationInput = {
@@ -7541,10 +7578,9 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     createdBy?: SortOrder
-    dateCreated?: SortOrder
+    createdDate?: SortOrder
     status?: SortOrder
-    tasks?: SortOrder
-    task?: TaskOrderByWithRelationInput
+    task?: TaskOrderByRelationAggregateInput
   }
 
   export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -7555,10 +7591,9 @@ export namespace Prisma {
     title?: StringFilter<"Project"> | string
     description?: StringFilter<"Project"> | string
     createdBy?: IntFilter<"Project"> | number
-    dateCreated?: DateTimeFilter<"Project"> | Date | string
+    createdDate?: DateTimeFilter<"Project"> | Date | string
     status?: BoolFilter<"Project"> | boolean
-    tasks?: IntFilter<"Project"> | number
-    task?: XOR<TaskRelationFilter, TaskWhereInput>
+    task?: TaskListRelationFilter
   }, "id">
 
   export type ProjectOrderByWithAggregationInput = {
@@ -7566,9 +7601,8 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     createdBy?: SortOrder
-    dateCreated?: SortOrder
+    createdDate?: SortOrder
     status?: SortOrder
-    tasks?: SortOrder
     _count?: ProjectCountOrderByAggregateInput
     _avg?: ProjectAvgOrderByAggregateInput
     _max?: ProjectMaxOrderByAggregateInput
@@ -7584,9 +7618,8 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Project"> | string
     description?: StringWithAggregatesFilter<"Project"> | string
     createdBy?: IntWithAggregatesFilter<"Project"> | number
-    dateCreated?: DateTimeWithAggregatesFilter<"Project"> | Date | string
+    createdDate?: DateTimeWithAggregatesFilter<"Project"> | Date | string
     status?: BoolWithAggregatesFilter<"Project"> | boolean
-    tasks?: IntWithAggregatesFilter<"Project"> | number
   }
 
   export type UserCreateInput = {
@@ -7792,8 +7825,9 @@ export namespace Prisma {
     title: string
     description: string
     status: number
+    createdDate: Date | string
     user: UserCreateNestedOneWithoutTaskInput
-    Project?: ProjectCreateNestedManyWithoutTaskInput
+    Project?: ProjectCreateNestedOneWithoutTaskInput
   }
 
   export type TaskUncheckedCreateInput = {
@@ -7801,16 +7835,18 @@ export namespace Prisma {
     title: string
     description: string
     status: number
+    createdDate: Date | string
     userId: number
-    Project?: ProjectUncheckedCreateNestedManyWithoutTaskInput
+    projectId?: number | null
   }
 
   export type TaskUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutTaskNestedInput
-    Project?: ProjectUpdateManyWithoutTaskNestedInput
+    Project?: ProjectUpdateOneWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateInput = {
@@ -7818,14 +7854,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
-    Project?: ProjectUncheckedUpdateManyWithoutTaskNestedInput
+    projectId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TaskUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TaskUncheckedUpdateManyInput = {
@@ -7833,16 +7871,18 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
+    projectId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ProjectCreateInput = {
     title: string
     description: string
     createdBy: number
-    dateCreated: Date | string
+    createdDate: Date | string
     status: boolean
-    task: TaskCreateNestedOneWithoutProjectInput
+    task?: TaskCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUncheckedCreateInput = {
@@ -7850,18 +7890,18 @@ export namespace Prisma {
     title: string
     description: string
     createdBy: number
-    dateCreated: Date | string
+    createdDate: Date | string
     status: boolean
-    tasks: number
+    task?: TaskUncheckedCreateNestedManyWithoutProjectInput
   }
 
   export type ProjectUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: BoolFieldUpdateOperationsInput | boolean
-    task?: TaskUpdateOneRequiredWithoutProjectNestedInput
+    task?: TaskUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUncheckedUpdateInput = {
@@ -7869,16 +7909,16 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: BoolFieldUpdateOperationsInput | boolean
-    tasks?: IntFieldUpdateOperationsInput | number
+    task?: TaskUncheckedUpdateManyWithoutProjectNestedInput
   }
 
   export type ProjectUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: BoolFieldUpdateOperationsInput | boolean
   }
 
@@ -7887,9 +7927,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: BoolFieldUpdateOperationsInput | boolean
-    tasks?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -8233,14 +8272,9 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type ProjectListRelationFilter = {
-    every?: ProjectWhereInput
-    some?: ProjectWhereInput
-    none?: ProjectWhereInput
-  }
-
-  export type ProjectOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type ProjectNullableRelationFilter = {
+    is?: ProjectWhereInput | null
+    isNot?: ProjectWhereInput | null
   }
 
   export type TaskCountOrderByAggregateInput = {
@@ -8248,13 +8282,16 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    createdDate?: SortOrder
     userId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type TaskAvgOrderByAggregateInput = {
     id?: SortOrder
     status?: SortOrder
     userId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type TaskMaxOrderByAggregateInput = {
@@ -8262,7 +8299,9 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    createdDate?: SortOrder
     userId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type TaskMinOrderByAggregateInput = {
@@ -8270,18 +8309,16 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     status?: SortOrder
+    createdDate?: SortOrder
     userId?: SortOrder
+    projectId?: SortOrder
   }
 
   export type TaskSumOrderByAggregateInput = {
     id?: SortOrder
     status?: SortOrder
     userId?: SortOrder
-  }
-
-  export type TaskRelationFilter = {
-    is?: TaskWhereInput
-    isNot?: TaskWhereInput
+    projectId?: SortOrder
   }
 
   export type ProjectCountOrderByAggregateInput = {
@@ -8289,15 +8326,13 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     createdBy?: SortOrder
-    dateCreated?: SortOrder
+    createdDate?: SortOrder
     status?: SortOrder
-    tasks?: SortOrder
   }
 
   export type ProjectAvgOrderByAggregateInput = {
     id?: SortOrder
     createdBy?: SortOrder
-    tasks?: SortOrder
   }
 
   export type ProjectMaxOrderByAggregateInput = {
@@ -8305,9 +8340,8 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     createdBy?: SortOrder
-    dateCreated?: SortOrder
+    createdDate?: SortOrder
     status?: SortOrder
-    tasks?: SortOrder
   }
 
   export type ProjectMinOrderByAggregateInput = {
@@ -8315,15 +8349,13 @@ export namespace Prisma {
     title?: SortOrder
     description?: SortOrder
     createdBy?: SortOrder
-    dateCreated?: SortOrder
+    createdDate?: SortOrder
     status?: SortOrder
-    tasks?: SortOrder
   }
 
   export type ProjectSumOrderByAggregateInput = {
     id?: SortOrder
     createdBy?: SortOrder
-    tasks?: SortOrder
   }
 
   export type OrderCreateNestedManyWithoutUserInput = {
@@ -8562,16 +8594,10 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type ProjectCreateNestedManyWithoutTaskInput = {
-    create?: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput> | ProjectCreateWithoutTaskInput[] | ProjectUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutTaskInput | ProjectCreateOrConnectWithoutTaskInput[]
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-  }
-
-  export type ProjectUncheckedCreateNestedManyWithoutTaskInput = {
-    create?: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput> | ProjectCreateWithoutTaskInput[] | ProjectUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutTaskInput | ProjectCreateOrConnectWithoutTaskInput[]
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  export type ProjectCreateNestedOneWithoutTaskInput = {
+    create?: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutTaskInput
+    connect?: ProjectWhereUniqueInput
   }
 
   export type UserUpdateOneRequiredWithoutTaskNestedInput = {
@@ -8582,44 +8608,52 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTaskInput, UserUpdateWithoutTaskInput>, UserUncheckedUpdateWithoutTaskInput>
   }
 
-  export type ProjectUpdateManyWithoutTaskNestedInput = {
-    create?: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput> | ProjectCreateWithoutTaskInput[] | ProjectUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutTaskInput | ProjectCreateOrConnectWithoutTaskInput[]
-    upsert?: ProjectUpsertWithWhereUniqueWithoutTaskInput | ProjectUpsertWithWhereUniqueWithoutTaskInput[]
-    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    update?: ProjectUpdateWithWhereUniqueWithoutTaskInput | ProjectUpdateWithWhereUniqueWithoutTaskInput[]
-    updateMany?: ProjectUpdateManyWithWhereWithoutTaskInput | ProjectUpdateManyWithWhereWithoutTaskInput[]
-    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  export type ProjectUpdateOneWithoutTaskNestedInput = {
+    create?: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput>
+    connectOrCreate?: ProjectCreateOrConnectWithoutTaskInput
+    upsert?: ProjectUpsertWithoutTaskInput
+    disconnect?: ProjectWhereInput | boolean
+    delete?: ProjectWhereInput | boolean
+    connect?: ProjectWhereUniqueInput
+    update?: XOR<XOR<ProjectUpdateToOneWithWhereWithoutTaskInput, ProjectUpdateWithoutTaskInput>, ProjectUncheckedUpdateWithoutTaskInput>
   }
 
-  export type ProjectUncheckedUpdateManyWithoutTaskNestedInput = {
-    create?: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput> | ProjectCreateWithoutTaskInput[] | ProjectUncheckedCreateWithoutTaskInput[]
-    connectOrCreate?: ProjectCreateOrConnectWithoutTaskInput | ProjectCreateOrConnectWithoutTaskInput[]
-    upsert?: ProjectUpsertWithWhereUniqueWithoutTaskInput | ProjectUpsertWithWhereUniqueWithoutTaskInput[]
-    set?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    disconnect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    delete?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
-    update?: ProjectUpdateWithWhereUniqueWithoutTaskInput | ProjectUpdateWithWhereUniqueWithoutTaskInput[]
-    updateMany?: ProjectUpdateManyWithWhereWithoutTaskInput | ProjectUpdateManyWithWhereWithoutTaskInput[]
-    deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
+  export type TaskCreateNestedManyWithoutProjectInput = {
+    create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput> | TaskCreateWithoutProjectInput[] | TaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutProjectInput | TaskCreateOrConnectWithoutProjectInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type TaskCreateNestedOneWithoutProjectInput = {
-    create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutProjectInput
-    connect?: TaskWhereUniqueInput
+  export type TaskUncheckedCreateNestedManyWithoutProjectInput = {
+    create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput> | TaskCreateWithoutProjectInput[] | TaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutProjectInput | TaskCreateOrConnectWithoutProjectInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
   }
 
-  export type TaskUpdateOneRequiredWithoutProjectNestedInput = {
-    create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput>
-    connectOrCreate?: TaskCreateOrConnectWithoutProjectInput
-    upsert?: TaskUpsertWithoutProjectInput
-    connect?: TaskWhereUniqueInput
-    update?: XOR<XOR<TaskUpdateToOneWithWhereWithoutProjectInput, TaskUpdateWithoutProjectInput>, TaskUncheckedUpdateWithoutProjectInput>
+  export type TaskUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput> | TaskCreateWithoutProjectInput[] | TaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutProjectInput | TaskCreateOrConnectWithoutProjectInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutProjectInput | TaskUpsertWithWhereUniqueWithoutProjectInput[]
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutProjectInput | TaskUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutProjectInput | TaskUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
+  }
+
+  export type TaskUncheckedUpdateManyWithoutProjectNestedInput = {
+    create?: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput> | TaskCreateWithoutProjectInput[] | TaskUncheckedCreateWithoutProjectInput[]
+    connectOrCreate?: TaskCreateOrConnectWithoutProjectInput | TaskCreateOrConnectWithoutProjectInput[]
+    upsert?: TaskUpsertWithWhereUniqueWithoutProjectInput | TaskUpsertWithWhereUniqueWithoutProjectInput[]
+    set?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    disconnect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    delete?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    connect?: TaskWhereUniqueInput | TaskWhereUniqueInput[]
+    update?: TaskUpdateWithWhereUniqueWithoutProjectInput | TaskUpdateWithWhereUniqueWithoutProjectInput[]
+    updateMany?: TaskUpdateManyWithWhereWithoutProjectInput | TaskUpdateManyWithWhereWithoutProjectInput[]
+    deleteMany?: TaskScalarWhereInput | TaskScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -8843,7 +8877,8 @@ export namespace Prisma {
     title: string
     description: string
     status: number
-    Project?: ProjectCreateNestedManyWithoutTaskInput
+    createdDate: Date | string
+    Project?: ProjectCreateNestedOneWithoutTaskInput
   }
 
   export type TaskUncheckedCreateWithoutUserInput = {
@@ -8851,7 +8886,8 @@ export namespace Prisma {
     title: string
     description: string
     status: number
-    Project?: ProjectUncheckedCreateNestedManyWithoutTaskInput
+    createdDate: Date | string
+    projectId?: number | null
   }
 
   export type TaskCreateOrConnectWithoutUserInput = {
@@ -8965,7 +9001,9 @@ export namespace Prisma {
     title?: StringFilter<"Task"> | string
     description?: StringFilter<"Task"> | string
     status?: IntFilter<"Task"> | number
+    createdDate?: DateTimeFilter<"Task"> | Date | string
     userId?: IntFilter<"Task"> | number
+    projectId?: IntNullableFilter<"Task"> | number | null
   }
 
   export type UserCreateWithoutOrdersInput = {
@@ -9172,7 +9210,7 @@ export namespace Prisma {
     title: string
     description: string
     createdBy: number
-    dateCreated: Date | string
+    createdDate: Date | string
     status: boolean
   }
 
@@ -9181,7 +9219,7 @@ export namespace Prisma {
     title: string
     description: string
     createdBy: number
-    dateCreated: Date | string
+    createdDate: Date | string
     status: boolean
   }
 
@@ -9222,39 +9260,39 @@ export namespace Prisma {
     Post?: PostUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type ProjectUpsertWithWhereUniqueWithoutTaskInput = {
-    where: ProjectWhereUniqueInput
+  export type ProjectUpsertWithoutTaskInput = {
     update: XOR<ProjectUpdateWithoutTaskInput, ProjectUncheckedUpdateWithoutTaskInput>
     create: XOR<ProjectCreateWithoutTaskInput, ProjectUncheckedCreateWithoutTaskInput>
+    where?: ProjectWhereInput
   }
 
-  export type ProjectUpdateWithWhereUniqueWithoutTaskInput = {
-    where: ProjectWhereUniqueInput
+  export type ProjectUpdateToOneWithWhereWithoutTaskInput = {
+    where?: ProjectWhereInput
     data: XOR<ProjectUpdateWithoutTaskInput, ProjectUncheckedUpdateWithoutTaskInput>
   }
 
-  export type ProjectUpdateManyWithWhereWithoutTaskInput = {
-    where: ProjectScalarWhereInput
-    data: XOR<ProjectUpdateManyMutationInput, ProjectUncheckedUpdateManyWithoutTaskInput>
+  export type ProjectUpdateWithoutTaskInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdBy?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: BoolFieldUpdateOperationsInput | boolean
   }
 
-  export type ProjectScalarWhereInput = {
-    AND?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
-    OR?: ProjectScalarWhereInput[]
-    NOT?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
-    id?: IntFilter<"Project"> | number
-    title?: StringFilter<"Project"> | string
-    description?: StringFilter<"Project"> | string
-    createdBy?: IntFilter<"Project"> | number
-    dateCreated?: DateTimeFilter<"Project"> | Date | string
-    status?: BoolFilter<"Project"> | boolean
-    tasks?: IntFilter<"Project"> | number
+  export type ProjectUncheckedUpdateWithoutTaskInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    createdBy?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TaskCreateWithoutProjectInput = {
     title: string
     description: string
     status: number
+    createdDate: Date | string
     user: UserCreateNestedOneWithoutTaskInput
   }
 
@@ -9263,6 +9301,7 @@ export namespace Prisma {
     title: string
     description: string
     status: number
+    createdDate: Date | string
     userId: number
   }
 
@@ -9271,30 +9310,20 @@ export namespace Prisma {
     create: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput>
   }
 
-  export type TaskUpsertWithoutProjectInput = {
+  export type TaskUpsertWithWhereUniqueWithoutProjectInput = {
+    where: TaskWhereUniqueInput
     update: XOR<TaskUpdateWithoutProjectInput, TaskUncheckedUpdateWithoutProjectInput>
     create: XOR<TaskCreateWithoutProjectInput, TaskUncheckedCreateWithoutProjectInput>
-    where?: TaskWhereInput
   }
 
-  export type TaskUpdateToOneWithWhereWithoutProjectInput = {
-    where?: TaskWhereInput
+  export type TaskUpdateWithWhereUniqueWithoutProjectInput = {
+    where: TaskWhereUniqueInput
     data: XOR<TaskUpdateWithoutProjectInput, TaskUncheckedUpdateWithoutProjectInput>
   }
 
-  export type TaskUpdateWithoutProjectInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    status?: IntFieldUpdateOperationsInput | number
-    user?: UserUpdateOneRequiredWithoutTaskNestedInput
-  }
-
-  export type TaskUncheckedUpdateWithoutProjectInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
-    status?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+  export type TaskUpdateManyWithWhereWithoutProjectInput = {
+    where: TaskScalarWhereInput
+    data: XOR<TaskUpdateManyMutationInput, TaskUncheckedUpdateManyWithoutProjectInput>
   }
 
   export type OrderUpdateWithoutUserInput = {
@@ -9364,7 +9393,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
-    Project?: ProjectUpdateManyWithoutTaskNestedInput
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    Project?: ProjectUpdateOneWithoutTaskNestedInput
   }
 
   export type TaskUncheckedUpdateWithoutUserInput = {
@@ -9372,7 +9402,8 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
-    Project?: ProjectUncheckedUpdateManyWithoutTaskNestedInput
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    projectId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TaskUncheckedUpdateManyWithoutUserInput = {
@@ -9380,32 +9411,34 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
     status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    projectId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ProjectUpdateWithoutTaskInput = {
+  export type TaskUpdateWithoutProjectInput = {
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: BoolFieldUpdateOperationsInput | boolean
+    status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTaskNestedInput
   }
 
-  export type ProjectUncheckedUpdateWithoutTaskInput = {
+  export type TaskUncheckedUpdateWithoutProjectInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: BoolFieldUpdateOperationsInput | boolean
+    status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ProjectUncheckedUpdateManyWithoutTaskInput = {
+  export type TaskUncheckedUpdateManyWithoutProjectInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     description?: StringFieldUpdateOperationsInput | string
-    createdBy?: IntFieldUpdateOperationsInput | number
-    dateCreated?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: BoolFieldUpdateOperationsInput | boolean
+    status?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
   }
 
 
@@ -9418,9 +9451,9 @@ export namespace Prisma {
      */
     export type UserCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserCountOutputTypeDefaultArgs<ExtArgs>
     /**
-     * @deprecated Use TaskCountOutputTypeDefaultArgs instead
+     * @deprecated Use ProjectCountOutputTypeDefaultArgs instead
      */
-    export type TaskCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TaskCountOutputTypeDefaultArgs<ExtArgs>
+    export type ProjectCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProjectCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use UserDefaultArgs instead
      */
