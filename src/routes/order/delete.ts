@@ -3,37 +3,37 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function deleteUser(app: FastifyInstance){
-    app.delete('/user/:userId', async (req,res) => {
+    app.delete('/order/:id', async (req,res) => {
         const paramsSchema = z.object({
-            userId: z.string()
+            id: z.number()
         });
 
         // Validar o corpo da solicitação
         const params = paramsSchema.parse(req.params);
-        var id = parseInt(params.userId);
+        var id = params.id;
         try {
             // Verificar se o email já está em uso
-            const exUser = await prisma.user.findFirst({
+            const exOrder = await prisma.order.findFirst({
                 where: {
                     id: id,
                 },
             });
 
-            if (exUser) {
+            if (exOrder) {
                 // Criar o novo usuário no banco de dadosnp
-                const user = await prisma.user.delete({ where: { id: id } })
+                const order = await prisma.order.delete({ where: { id: exOrder.id } })
                 return {
-                    user,
-                    message: "Conta deletada com sucesso!",
+                    order,
+                    message: "Pedido deletado com sucesso!",
                 };
             } else {
                 return {
-                    error: "Usuário não encontrado.",
+                    error: "Pedido não encontrado.",
                 };
             }
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao encontrar o usuário.",
+                error: "Ocorreu um erro ao encontrar o pedido.",
             };
         }
     });

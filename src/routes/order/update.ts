@@ -3,48 +3,50 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function updateUser(app: FastifyInstance){
-    app.put('/user/', async (req,res) => {
+    app.put('/order/', async (req,res) => {
         const bodySchema = z.object({
             id: z.number(),
-            username: z.string().optional(),
-            email: z.string().email().optional(),
-            password: z.string().optional(),
+            orderNumber: z.string().optional(),
+            dateCreated: z.date().optional(),
+            userId: z.string().optional(),
             status: z.boolean().optional(),
+            amount: z.number().optional(),
+            items: z.number().optional()
           });
         // Validar o corpo da solicitação
-        const userData = bodySchema.parse(req.body)
-        const userId = userData.id
+        const orderData = bodySchema.parse(req.body)
+        const id = orderData.id
         try {
-            const user = await prisma.user.findUnique({
+            const order = await prisma.order.findUnique({
                 where: {
-                    id: userId,
+                    id: id,
                 },
             });
             
-            if(user){
-                const updtUser = {
-                ...user,
-                ...userData,
+            if(order){
+                const updtOrder = {
+                ...order,
+                ...orderData,
                 }
-                const returnUser = await prisma.user.update({
+                const returnOrder = await prisma.user.update({
                     where: {
-                        id: userId,
+                        id: id,
                     },
-                    data: updtUser
+                    data: updtOrder
                 });
                 return {
-                    returnUser,
-                    msg: "Usuário encontrado.",
+                    returnOrder,
+                    msg: "Pedido atualizado com sucesso.",
                 };
             }else{
                 return {
-                    user,
-                    error: "Usuário não encontrado.",
+                    order,
+                    error: "Pedido não encontrado.",
                 };
             }
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao encontrar o usuário.",
+                error: "Ocorreu um erro ao encontrar o pedido.",
             };
         }
     });

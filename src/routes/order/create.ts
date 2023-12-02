@@ -2,44 +2,46 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
-export async function createUser(app: FastifyInstance){
-    app.post('/user/', async (req) => {
+export async function createOrder(app: FastifyInstance){
+    app.post('/order/', async (req) => {
         const bodySchema = z.object({
-            username: z.string(),
-            email: z.string(),
-            password: z.string(),
-            status: z.boolean()
+            orderNumber: z.string(),
+            amount: z.number(),
+            dateCreated: z.date(),
+            items: z.number(),
+            status: z.boolean(),
+            userId: z.number()
         });
 
         // Validar o corpo da solicitação
-        const userData = bodySchema.parse(req.body);
+        const orderData = bodySchema.parse(req.body);
 
         try {
             // Verificar se o email já está em uso
-            const exUser = await prisma.user.findFirst({
+            const existingOrder = await prisma.user.findFirst({
                 where: {
-                    email: userData.email,
+                    email: orderData.orderNumber,
                 },
             });
 
-            if (exUser) {
+            if (existingOrder) {
                 return {
-                    error: "Está e-mail já existe na nosa base de dados.",
+                    error: "Busque o pedido pelo número do pedido.",
                 };
             }
 
             // Criar o novo usuário no banco de dadosnp
-            const user = await prisma.user.create({
-                data: userData,
+            const order = await prisma.order.create({
+                data: orderData,
             });
 
             return {
-                user,
-                message: "Conta registrada com sucesso!",
+                order,
+                message: "Pedido criado com sucesso, já disponivel na listagem de pedidos.",
             };
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao registrar o dado.",
+                error: "Ocorreu um erro ao registrar o pedido.",
             };
         }
     });

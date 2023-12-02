@@ -3,16 +3,15 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function getUser(app: FastifyInstance){
-    app.get('/user/:userId', async (req,res) => {
+    app.get('/user/:id', async (req,res) => {
         const paramsSchema = z.object({
-            userId: z.string().optional()
+            orderId: z.number().optional()
         });
 
         // Validar o corpo da solicitação
-        var id = 0;
         const params = paramsSchema.parse(req.params);
-        if(params.userId != null){
-            id = parseInt(params.userId);
+        if(params.orderId != 0){
+           var id = params.orderId;
         }
         try {
             // Verificar se o email já está em uso
@@ -24,18 +23,18 @@ export async function getUser(app: FastifyInstance){
                 });
                 return {
                     users,
-                    msg: "Usuário encontrado.",
+                    msg: "Pedido encontrado.",
                 };
             } else {
                 const users = await prisma.user.findMany();
                 return {
                     users,
-                    msg: "Usuários encontrados.",
+                    msg: "Listagem de pedidos.",
                 };
             }
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao encontrar o usuário.",
+                error: "Ocorreu um erro ao encontrar os pedidos.",
             };
         }
     });
