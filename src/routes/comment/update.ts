@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
-export async function updateUser(app: FastifyInstance){
+export async function updateComment(app: FastifyInstance){
     app.put('/comment/', async (req,res) => {
         const bodySchema = z.object({
             id: z.number(),

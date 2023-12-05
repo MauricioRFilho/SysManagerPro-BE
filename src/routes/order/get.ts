@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
-export async function getUser(app: FastifyInstance){
+export async function getOrder(app: FastifyInstance){
     app.get('/user/:id', async (req,res) => {
         const paramsSchema = z.object({
             orderId: z.number().optional()
