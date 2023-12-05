@@ -2,35 +2,35 @@ import { FastifyInstance } from "fastify";
 import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
-export async function getUser(app: FastifyInstance){
-    app.get('/user/:userId', async (req,res) => {
+export async function getComment(app: FastifyInstance){
+    app.get('/comment/:commentId', async (req,res) => {
         const paramsSchema = z.object({
-            userId: z.string().optional()
+            commentId: z.string().optional()
         });
 
         // Validar o corpo da solicitação
         var id = 0;
         const params = paramsSchema.parse(req.params);
-        if(params.userId != null){
-            id = parseInt(params.userId);
+        if(params.commentId != null){
+            id = parseInt(params.commentId);
         }
         try {
             // Verificar se o email já está em uso
             if(id != 0){
-                const users = await prisma.user.findFirst({
+                const comment = await prisma.user.findFirst({
                     where: {
                         id: id,
                     },
                 });
                 return {
-                    users,
-                    msg: "Usuário encontrado.",
+                    comment,
+                    success: "Comentário encontrado.",
                 };
             } else {
-                const users = await prisma.user.findMany();
+                const comments = await prisma.user.findMany();
                 return {
-                    users,
-                    msg: "Usuários encontrados.",
+                    comments,
+                    success: "Comentários encontrados.",
                 };
             }
         } catch (error) {

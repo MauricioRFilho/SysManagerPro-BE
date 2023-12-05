@@ -1,45 +1,35 @@
-import { FastifyInstance } from "fastify";
-import { prisma } from "../../lib/prisma";
+import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
+import { PrismaClient } from '@prisma/client';
 
-export async function createUser(app: FastifyInstance){
-    app.post('/user/', async (req) => {
+const prisma = new PrismaClient();
+
+export async function createComment(app: FastifyInstance){
+    app.post('/comment/', async (req) => {
         const bodySchema = z.object({
-            username: z.string(),
-            email: z.string(),
-            password: z.string(),
-            status: z.boolean()
+            text: z.string(),
+            userId: z.number(),
+            dateCreated: z.date().optional(),
         });
-
         // Validar o corpo da solicitação
-        const userData = bodySchema.parse(req.body);
+        const commentData = bodySchema.parse(req.body);
+
+        // Adiciona a data atual ao objeto commentData
+        commentData.dateCreated = new Date();
 
         try {
-            // Verificar se o email já está em uso
-            const exUser = await prisma.user.findFirst({
-                where: {
-                    email: userData.email,
-                },
-            });
-
-            if (exUser) {
-                return {
-                    error: "Está e-mail já existe na nosa base de dados.",
-                };
-            }
-
-            // Criar o novo usuário no banco de dadosnp
-            const user = await prisma.user.create({
-                data: userData,
+            // Comentario pode existir vários repetidos
+            const comment = await prisma.comment.create({
+                data: commentData,
             });
 
             return {
-                user,
-                message: "Conta registrada com sucesso!",
+                comment,
+                success: "Comentário registrado com sucesso!",
             };
         } catch (error) {
             return {
-                error: "Ocorreu um erro ao registrar o dado.",
+                error: "Ocorreu um erro ao registrar o comentário.",
             };
         }
     });

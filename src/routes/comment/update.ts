@@ -3,42 +3,40 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function updateUser(app: FastifyInstance){
-    app.put('/user/', async (req,res) => {
+    app.put('/comment/', async (req,res) => {
         const bodySchema = z.object({
             id: z.number(),
-            username: z.string().optional(),
-            email: z.string().email().optional(),
-            password: z.string().optional(),
-            status: z.boolean().optional(),
+            text: z.string().optional(),
+            userId: z.number().optional()
           });
         // Validar o corpo da solicitação
-        const userData = bodySchema.parse(req.body)
-        const userId = userData.id
+        const commentData = bodySchema.parse(req.body)
+        const id = commentData.id
         try {
-            const user = await prisma.user.findUnique({
+            const comment = await prisma.comment.findUnique({
                 where: {
-                    id: userId,
+                    id: id,
                 },
             });
             
-            if(user){
-                const updtUser = {
-                ...user,
-                ...userData,
+            if(comment){
+                const updateComment = {
+                ...comment,
+                ...commentData,
                 }
-                const returnUser = await prisma.user.update({
+                const returnComment = await prisma.comment.update({
                     where: {
-                        id: userId,
+                        id: id,
                     },
-                    data: updtUser
+                    data: updateComment
                 });
                 return {
-                    returnUser,
-                    msg: "Usuário encontrado.",
+                    returnComment,
+                    success: "Usuário encontrado.",
                 };
             }else{
                 return {
-                    user,
+                    comment,
                     error: "Usuário não encontrado.",
                 };
             }
