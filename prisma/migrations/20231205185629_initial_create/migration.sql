@@ -44,8 +44,11 @@ CREATE TABLE "Task" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "status" INTEGER NOT NULL,
+    "createdDate" DATETIME NOT NULL,
     "userId" INTEGER NOT NULL,
-    CONSTRAINT "Task_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "projectId" INTEGER,
+    CONSTRAINT "Task_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Task_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -54,10 +57,8 @@ CREATE TABLE "Project" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "createdBy" INTEGER NOT NULL,
-    "dateCreated" DATETIME NOT NULL,
-    "status" BOOLEAN NOT NULL,
-    "tasks" INTEGER NOT NULL,
-    CONSTRAINT "Project_tasks_fkey" FOREIGN KEY ("tasks") REFERENCES "Task" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "createdDate" DATETIME NOT NULL,
+    "status" BOOLEAN NOT NULL
 );
 
 -- CreateIndex

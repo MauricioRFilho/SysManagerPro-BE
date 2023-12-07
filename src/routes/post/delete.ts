@@ -3,7 +3,7 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function deletePost(app: FastifyInstance){
-    app.delete('/user/:userId', async (req,res) => {
+    app.delete('/post/:userId', async (req,res) => {
         const paramsSchema = z.object({
             userId: z.string()
         });

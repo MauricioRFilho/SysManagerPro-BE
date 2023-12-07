@@ -1,5 +1,5 @@
 import fastify from "fastify";
-import fastifySwagger from "fastify-swagger";
+import fastifySwagger from "@fastify/swagger";
 
 import { createUser } from "./src/routes/user/create";
 import { createComment } from "./src/routes/comment/create";
@@ -32,98 +32,7 @@ import { updatePost } from "./src/routes/post/update";
 
 const app = fastify();
 
-// Configuração do Swagger
-app.register(require('@fastify/swagger'), {
-    swagger: {
-      info: {
-        title: 'Test swagger',
-        description: 'Testing the Fastify swagger API',
-        version: '0.1.0'
-      },
-      externalDocs: {
-        url: 'https://swagger.io',
-        description: 'Find more info here'
-      },
-      host: 'localhost',
-      schemes: ['http'],
-      consumes: ['application/json'],
-      produces: ['application/json'],
-      tags: [
-        { name: 'user', description: 'User related end-points' },
-        { name: 'code', description: 'Code related end-points' }
-      ],
-      definitions: {
-        User: {
-          type: 'object',
-          required: ['id', 'email'],
-          properties: {
-            id: { type: 'string', format: 'uuid' },
-            firstName: { type: 'string' },
-            lastName: { type: 'string' },
-            email: {type: 'string', format: 'email' }
-          }
-        }
-      },
-      securityDefinitions: {
-        apiKey: {
-          type: 'apiKey',
-          name: 'apiKey',
-          in: 'header'
-        }
-      }
-    }
-  })
-  
-  app.put('/some-route/:id', {
-    schema: {
-      description: 'post some data',
-      tags: ['user', 'code'],
-      summary: 'qwerty',
-      params: {
-        type: 'object',
-        properties: {
-          id: {
-            type: 'string',
-            description: 'user id'
-          }
-        }
-      },
-      body: {
-        type: 'object',
-        properties: {
-          hello: { type: 'string' },
-          obj: {
-            type: 'object',
-            properties: {
-              some: { type: 'string' }
-            }
-          }
-        }
-      },
-      response: {
-        201: {
-          description: 'Successful response',
-          type: 'object',
-          properties: {
-            hello: { type: 'string' }
-          }
-        },
-        default: {
-          description: 'Default response',
-          type: 'object',
-          properties: {
-            foo: { type: 'string' }
-          }
-        }
-      },
-      security: [
-        {
-          "apiKey": []
-        }
-      ]
-    }
-  }, (req, reply) => {})
-app.swagger()
+app.register(fastifySwagger);
 
 // Array de rotas
 const routes = [
@@ -143,12 +52,3 @@ app.listen({
 }).then(() => {
   console.log("Server listening on http://localhost:3000/");
 });
-
-
-
-app.listen({
-    host: "0.0.0.0",
-    port: 3000,
-}).then(() => {
-    console.log("http://localhost:3000/")
-})

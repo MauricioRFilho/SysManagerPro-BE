@@ -3,7 +3,7 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function getPost(app: FastifyInstance){
-    app.get('/user/:userId', async (req,res) => {
+    app.get('/post/:userId', async (req,res) => {
         const paramsSchema = z.object({
             userId: z.string().optional()
         });

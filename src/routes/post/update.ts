@@ -3,7 +3,7 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function updatePost(app: FastifyInstance){
-    app.put('/user/', async (req,res) => {
+    app.put('/post/', async (req,res) => {
         const bodySchema = z.object({
             id: z.number(),
             username: z.string().optional(),

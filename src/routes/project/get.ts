@@ -3,7 +3,7 @@ import { prisma } from "../../lib/prisma";
 import { z } from 'zod';
 
 export async function getProject(app: FastifyInstance){
-    app.get('/user/:projectId', async (req,res) => {
+    app.get('/project/:projectId', async (req,res) => {
         const paramsSchema = z.object({
             projectId: z.string().optional()
         });
